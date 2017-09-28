@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/bramblejs/bramble/issues"
   },
-  "homepage": "https://github.com/bramblejs/bramble#readme"
+  "homepage": "https://github.com/bramblejs/bramble#readme",
+  "bramble":{
+    "threshold": 2000
+  }
 }

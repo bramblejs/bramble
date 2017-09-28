@@ -1,20 +1,21 @@
 import '../node_modules/chart.js/dist/Chart.bundle.min.js';
+// const pjson = require('package.json');
 
-var ctx = $("#lineChart");
-var data = [2000,3029,2500,3100,2700];
-var threshold = [2700,2700,2700,2700,2700];
-var labels = ["13h42 - Build 34", "14h42, Build 35", "15h42, Build 36","16h42, Build 37" ,"17h42, Build 38"];
-var sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
-var pointBackgroundColors = [];
-var difference = sub(data, threshold);
-function pointColor() {
-    difference.forEach(function(val){
+const ctx = $("#lineChart");
+const data = [2000,3029,2500,3100,2700];
+const threshold = [2700,2700,2700,2700,2700];
+const labels = ["13h42 - Build 34", "14h42, Build 35", "15h42, Build 36","16h42, Build 37" ,"17h42, Build 38"];
+const sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
+let pointBackgroundColors = [];
+const difference = sub(data, threshold);
+const pointColor = () => {
+    difference.forEach((val) => {
         val > 0 ? pointBackgroundColors.push("#90cd8a"): pointBackgroundColors.push("#f58368");
     });
 }
 pointColor();
 
-var lineChart = new Chart(ctx, {
+const lineChart = new Chart(ctx, {
     type: 'line',
     data: {
     labels:labels,
