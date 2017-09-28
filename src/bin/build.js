@@ -10,7 +10,10 @@ const rimraf = promisify(require('rimraf'));
 const stat = promisify(fs.stat);
 const writeFile = promisify(fs.writeFile);
 
-const defaults = { outDir: 'bramble', srcFiles: 'src/**/*.js' };
+const defaults = {
+  outDir: 'bramble',
+  srcFiles: 'src/**/*.js'
+};
 
 module.exports = async args => {
   const { outDir, srcFiles } = { ...defaults, ...args };
