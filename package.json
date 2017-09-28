@@ -18,10 +18,13 @@
     "serve": "^6.1.0"
   },
   "devDependencies": {
+    "browserify": "^14.4.0",
     "conartist": "^0.12.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "serve": "serve ./dist",
+    "build": "browserify -e src/visualisation.js -o bundle.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +36,7 @@
     "url": "https://github.com/bramblejs/bramble/issues"
   },
   "homepage": "https://github.com/bramblejs/bramble#readme",
-  "bramble":{
-    "threshold": 2000
+  "bramble": {
+    "threshold": 1800
   }
 }

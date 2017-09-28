@@ -1,16 +1,17 @@
-import '../node_modules/chart.js/dist/Chart.bundle.min.js';
-// const pjson = require('package.json');
+require('chart.js/dist/Chart.bundle.min.js');
+const pjson = require('../package.json');
+const mockData = require('../bramble-lock.json');
 
 const ctx = $("#lineChart");
-const data = [2000,3029,2500,3100,2700];
-const threshold = [2700,2700,2700,2700,2700];
-const labels = ["13h42 - Build 34", "14h42, Build 35", "15h42, Build 36","16h42, Build 37" ,"17h42, Build 38"];
+const data = Object.values(mockData).map((a) => a.size);
+const labels = Object.keys(mockData);
+const threshold = labels.map((a) => pjson.bramble.threshold);
 const sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
 let pointBackgroundColors = [];
 const difference = sub(data, threshold);
 const pointColor = () => {
     difference.forEach((val) => {
-        val > 0 ? pointBackgroundColors.push("#90cd8a"): pointBackgroundColors.push("#f58368");
+        val < 0 ? pointBackgroundColors.push("#90cd8a"): pointBackgroundColors.push("#f58368");
     });
 }
 pointColor();
@@ -24,7 +25,7 @@ const lineChart = new Chart(ctx, {
         label: "Current Bundle Size",
         borderColor: "#3e95cd",
         pointBackgroundColor: pointBackgroundColors,
-        fill: false
+        fill: false,
       }, { 
         data: threshold,
         label: "Threshold",
@@ -42,9 +43,15 @@ const lineChart = new Chart(ctx, {
     },
     options: {
         title: {
-        display: true,
-        text: 'Bundle size'
-        }
+            display: true,
+            text: 'Bundle size'
+        },
+        xAxisID: 'Build Version',
+        yAxisID: 'Size (Bytes)',
+        tooltips: {
+            mode: 'label'
+        },
+        responsive: true,   
     }
 });
-export default Chart;
+module.exports = Chart;
