@@ -44,3 +44,17 @@ For example, you can run this as part of your test step:
   }
 }
 ```
+
+## JSON schema
+
+The data is stored in a JSON schema inside the folder you configure for bramble called `schema.json`. Each entrie inside of `data` represents an analysis entry that is used in visualisation and checking.
+
+The current schema looks something like this.
+
+```json
+{
+  "data": [{
+    "bytes": 1024
+  }]
+}
+```
