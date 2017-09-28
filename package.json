@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Elegantly visualising bundle sizes over time.",
   "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
+  "bin": "src/bin",
   "dependencies": {},
   "devDependencies": {
     "conartist": "^0.12.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
