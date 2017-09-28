@@ -54,8 +54,9 @@ The current schema looks something like this.
 ```json
 {
   "data": [{
-    "bytes": 1024,
-    "date": "Thu, 28 Sep 2017 01:28:54 GMT"
+    "date": "Thu, 28 Sep 2017 01:28:54 GMT",
+    "size": 1024,
+    "version": "1.0.0"
   }]
 }
 ```
