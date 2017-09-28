@@ -1,12 +1,12 @@
 {
   "name": "bramble",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
+  "description": "Elegantly visualising bundle sizes over time.",
+  "main": "src/index.js",
+  "dependencies": {},
+  "devDependencies": {
     "conartist": "^0.12.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
