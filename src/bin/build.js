@@ -10,9 +10,10 @@ const rimraf = promisify(require('rimraf'));
 const stat = promisify(fs.stat);
 const writeFile = promisify(fs.writeFile);
 
-module.exports = async (
-  { outDir = 'bramble', srcFiles = 'src/**/*.js' } = {}
-) => {
+const defaults = { outDir: 'bramble', srcFiles: 'src/**/*.js' };
+
+module.exports = async args => {
+  const { outDir, srcFiles } = { ...defaults, ...args };
   const schemaFilePath = path.join(outDir, 'schema.json');
   const existingSchema = (await exists(schemaFilePath))
     ? JSON.parse(await readFile(schemaFilePath))
