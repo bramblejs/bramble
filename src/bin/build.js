@@ -3,12 +3,15 @@ const path = require('path');
 const { promisify } = require('util');
 
 const exists = promisify(fs.exists);
-const glob = promisify(require('glob'));
 const mkdirp = promisify(require('mkdirp'));
 const readFile = promisify(fs.readFile);
 const rimraf = promisify(require('rimraf'));
 const stat = promisify(fs.stat);
 const writeFile = promisify(fs.writeFile);
+
+const date = require('../date');
+const pkg = require('../pkg');
+const size = require('../size');
 
 const defaults = {
   outDir: 'bramble',
@@ -25,15 +28,10 @@ module.exports = async args => {
   await rimraf(outDir);
   await mkdirp(outDir);
 
-  const date = new Date().toGMTString();
-  const size = await (await glob(srcFiles)).reduce(
-    async (prev, curr) => (await prev) + (await stat(curr)).size,
-    Promise.resolve(0)
-  );
-
   existingSchema.data = existingSchema.data.concat({
-    date,
-    size
+    date: date(),
+    size: await size(srcFiles),
+    version: (await pkg()).version || ''
   });
 
   writeFile(schemaFilePath, JSON.stringify(existingSchema));
