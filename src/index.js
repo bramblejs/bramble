@@ -1,1 +1,7 @@
-// This is the main entry point.
+const build = require('./build');
+const check = require('./check');
+
+module.exports = {
+  build,
+  check
+};
