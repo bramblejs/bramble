@@ -40,7 +40,7 @@ For example, you can run this as part of your test step:
 ```sh
 {
   "scripts": {
-    "test": "webpack && bramble check"
+    "test": "webpack && bramble check --threshold 10k"
   }
 }
 ```
