@@ -8,6 +8,7 @@
   ],
   "bin": "src/bin",
   "dependencies": {
+    "bytes": "^3.0.0",
     "glob": "^7.1.2",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2"
