@@ -1,5 +1,5 @@
 {
-  "name": "bramble",
+  "name": "bramblejs",
   "version": "1.0.0",
   "description": "Elegantly visualising bundle sizes over time.",
   "main": "src/index.js",
@@ -11,9 +11,12 @@
     "bytes": "^3.0.0",
     "chalk": "^2.1.0",
     "glob": "^7.1.2",
+    "memoize-one": "^3.0.1",
     "mkdirp": "^0.5.1",
     "outdent": "^0.3.0",
-    "rimraf": "^2.6.2"
+    "pkg-versions": "^1.1.0",
+    "rimraf": "^2.6.2",
+    "source-trace": "^2.0.1"
   },
   "devDependencies": {
     "conartist": "^0.12.0"

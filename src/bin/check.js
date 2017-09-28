@@ -1,57 +1,42 @@
 const bytes = require('bytes');
 const chalk = require('chalk');
-const fs = require('fs');
 const outdent = require('outdent');
-const path = require('path');
-const { promisify } = require('util');
+const pkgVersions = require('pkg-versions');
 
-const exists = promisify(fs.exists);
-const glob = promisify(require('glob'));
-const readFile = promisify(fs.readFile);
-
+const { getLatestVersion, getSchema } = require('../pkg');
+const { err, log } = require('../log');
 const size = require('../size');
 
-const defaults = {
-  outDir: 'bramble',
-  srcFiles: 'src/**/*.js',
-  threshold: 1024
-};
+module.exports = async ({ limit, mains, threshold }) => {
+  const latestVersion = await getLatestVersion();
+  const currentSchema = await getSchema();
 
-module.exports = async args => {
-  const { outDir, srcFiles, threshold } = { ...defaults, ...args };
-  const schemaFilePath = path.join(outDir, 'schema.json');
-
-  if (!await exists(schemaFilePath)) {
-    throw new Error(
-      `A schema file at ${schemaFilePath} must exist in order to run checks.`
-    );
+  if (!latestVersion) {
+    err(chalk.red(`There is no previous version to compare to.`));
   }
 
-  const currSchema = JSON.parse(await readFile(schemaFilePath));
-  const lastSize = currSchema.data[currSchema.data.length - 1].size;
-  const currSize = await size(srcFiles);
-  const offsetSize = currSize - threshold;
-  const difference = offsetSize - lastSize;
+  const latestSchema = currentSchema[latestVersion];
+  const latestSize = latestSchema.size;
+  const currentSize = await size(mains);
+  const offsetSize = currentSize - threshold;
+  const difference = offsetSize - latestSize;
 
-  if (offsetSize > lastSize) {
-    console.error(outdent`
-
+  if (offsetSize > latestSize || (limit && offsetSize > limit)) {
+    err(outdent`
       ${chalk.red(`Error: Bundle size over limit!`)}
 
       Threshold: ${bytes(threshold)}
-      Previous: ${bytes(lastSize)}
-      Current: ${bytes(currSize)} ${chalk.red(`+${bytes(difference)}`)}
-
+      Previous: ${bytes(latestSize)}
+      Current: ${bytes(currentSize)} ${chalk.red(`+${bytes(difference)}`)}
     `);
+    process.exit(1);
   } else {
-    console.log(outdent`
-
+    log(outdent`
       ${chalk.green(`Bundle size within normal range.`)}
 
       Threshold: ${bytes(threshold)}
-      Previous: ${bytes(lastSize)}
-      Current: ${bytes(currSize)} ${chalk.green(bytes(difference))}
-
+      Previous: ${bytes(latestSize)}
+      Current: ${bytes(currentSize)} ${chalk.green(bytes(difference))}
     `);
   }
 };
