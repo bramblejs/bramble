@@ -4,6 +4,7 @@ const mockData = require('../bramble-lock.json');
 
 const ctx = $("#lineChart");
 const data = Object.values(mockData).map((a) => a.size);
+const maxData = Math.max(...data);
 const labels = Object.keys(mockData);
 const threshold = labels.map((a) => pjson.bramble.threshold);
 const sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
@@ -25,7 +26,7 @@ const lineChart = new Chart(ctx, {
         label: "Current Bundle Size",
         borderColor: "#3e95cd",
         pointBackgroundColor: pointBackgroundColors,
-        fill: false,
+        fill: false
       }, { 
         data: threshold,
         label: "Threshold",
@@ -35,23 +36,54 @@ const lineChart = new Chart(ctx, {
       { 
         data: difference,
         label: "Difference",
-        borderColor: "#ffce56",
+        borderColor: "#ff9933",
         pointBackgroundColor: pointBackgroundColors,
+        pointBorderColor: pointBackgroundColors,
+        showLine: false,
+        // hidden: true,
         fill: false
       }
      ]
     },
     options: {
+        responsive: true,
+        tooltips: {
+            mode: 'label',
+            intersect: true
+        },
+        legend: {
+            position: 'top',
+        },
         title: {
             display: true,
-            text: 'Bundle size'
+            text: 'Build Version vs Bundle Size'
         },
-        xAxisID: 'Build Version',
-        yAxisID: 'Size (Bytes)',
-        tooltips: {
+        hover: {
             mode: 'label'
         },
-        responsive: true,   
+        scales: {
+            xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Build Version'
+                    }
+                }],
+            yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Bundle Size (Byte)'
+                    },
+                    ticks: {
+                        beginAtZero: false,
+                        steps: 500,
+                        stepValue: 500,
+                        max: maxData + 100
+                    }
+                }]
+        },
+        
     }
 });
 module.exports = Chart;
