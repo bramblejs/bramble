@@ -21,7 +21,7 @@ This means that you can analyse bundles over time as part of PRs and releases.
 1. Configure Netlify to run `bramble` (or an NPM script that does so)
 2. Point Netlify at the `bramble/` folder (or your configured folder).
 
-### During prepublish
+### Pre-publish
 
 ```json
 {
