@@ -24,7 +24,7 @@
     "source-trace": "^2.0.1"
   },
   "scripts": {
-    "prepush": "npm run write && git commit --ignore-errors -am 'Update bramble-lock.json.'",
+    "prepush": "npm run write && git commit --allow-empty -am 'Update bramble-lock.json.'",
     "test": "jest",
     "version": "npm run write",
     "write": "node ./src/bin/index.js write && git add . --ignore-errors"
