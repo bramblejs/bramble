@@ -37,12 +37,12 @@ NPM provides a `version` hook that gets executed *after* bumping the version in 
 ```json
 {
   "scripts": {
-    "version": "bramble write && git add ."
+    "version": "bramble write && git add . --ignore-errors"
   }
 }
 ```
 
-The `bramble write` command updates the lockfile and you must call `git add .` to add the lockfile to the stage so NPM can commit and tag it.
+The `bramble write` command updates the lockfile and you must call `git add .` to add the lockfile to the stage so NPM can commit and tag it. We must `--ignore-errors` because if `git add` doesn't add any files, it will exit with a non-zero status code preventing the push.
 
 If you opt-out of using the `version` hook, it's up to you to ensure that your lockfile is updated and committed prior to publishing.
 
