@@ -8,11 +8,26 @@ const maxData = Math.max(...data);
 const labels = Object.keys(mockData);
 const threshold = labels.map((a) => pjson.bramble.threshold);
 const sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
-let pointBackgroundColors = [];
 const difference = sub(data, threshold);
+let pointBackgroundColors = [];
+let upperT = [];
+let lowerT= [];
+const splitData = () => {
+    data.forEach((val) => {
+        if (val >= threshold[0]) {
+            upperT.push(val);
+            lowerT.push(null);
+        } else {
+            lowerT.push(val);
+            upperT.push(null);
+        }
+    });
+}
+splitData();
+
 const pointColor = () => {
     difference.forEach((val) => {
-        val < 0 ? pointBackgroundColors.push("#90cd8a"): pointBackgroundColors.push("#f58368");
+        val >= 0 ? pointBackgroundColors.push("#f58368"): pointBackgroundColors.push("#90cd8a");
     });
 }
 pointColor();
@@ -22,66 +37,81 @@ const lineChart = new Chart(ctx, {
     data: {
     labels:labels,
     datasets: [{ 
-        data: data,
-        label: "Current Bundle Size",
+        backgroundColor: 'transparent',
         borderColor: "#3e95cd",
-        pointBackgroundColor: pointBackgroundColors,
-        fill: false
-      }, { 
-        data: threshold,
-        label: "Threshold",
-        borderColor: "#8e5ea2",
-        fill: false
+        data: data,
+        fill: false,
+        label: "Current Bundle Size",
+        pointBackgroundColor: pointBackgroundColors  
       }, 
       { 
+        backgroundColor: "rgba(255,0,0,0.3)",
+        data: upperT,
+        fill: 3,
+        label: "Upper Bundle Values" 
+      }, 
+      { 
+        backgroundColor: "rgba(0,255,0,0.3)",
+        data: lowerT,
+        fill: 3,
+        label: "Lower Bundle Values"
+      }, 
+      { 
+        backgroundColor: 'transparent',
+        borderColor: "#8e5ea2",
+        data: threshold,
+        fill: false,
+        label: "Threshold",
+      }, 
+      { 
+        backgroundColor: 'transparent',
         data: difference,
-        label: "Difference",
-        borderColor: "#ff9933",
+        fill: false,
+        label: "Difference", 
         pointBackgroundColor: pointBackgroundColors,
         pointBorderColor: pointBackgroundColors,
-        showLine: false,
-        // hidden: true,
-        fill: false
+        showLine: false
       }
      ]
     },
     options: {
-        responsive: true,
-        tooltips: {
-            mode: 'label',
-            intersect: true
+        hover: {
+            mode: 'label'
         },
         legend: {
             position: 'top',
+        },   
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Build Version'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Bundle Size (Byte)'
+                },
+                ticks: {
+                    beginAtZero: false,
+                    steps: 500,
+                    stepValue: 500,
+                    max: maxData + 200
+                }
+            }]
         },
         title: {
             display: true,
             text: 'Build Version vs Bundle Size'
         },
-        hover: {
-            mode: 'label'
-        },
-        scales: {
-            xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Build Version'
-                    }
-                }],
-            yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Bundle Size (Byte)'
-                    },
-                    ticks: {
-                        beginAtZero: false,
-                        steps: 500,
-                        stepValue: 500,
-                        max: maxData + 100
-                    }
-                }]
+        tooltips: {
+            mode: 'label',
+            intersect: true
         },
         
     }
