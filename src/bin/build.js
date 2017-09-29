@@ -3,20 +3,19 @@ const path = require('path');
 const { promisify } = require('util');
 
 const webpack = promisify(require('webpack'));
+const app = path.join.bind(path, __dirname, '..', '..', 'app');
 
 module.exports = async args => {
-  const copy = async file =>
-    await fs.copy(
-      path.join(__dirname, '..', '..', 'app', file),
-      path.join(args.outDir, file)
-    );
-  await copy('index.html');
-  await copy('index.js');
+  const out = path.join.bind(path, args.outDir);
+  const tmp = path.join.bind(path, `${args.outDir}-tmp`);
+
+  await fs.copy(app('index.js'), tmp('index.js'));
   await webpack({
-    entry: `${args.outDir}/index.js`,
+    entry: './' + tmp('index.js'),
     output: {
-      filename: `${args.outDir}/bundle.js`
+      filename: out('bundle.js')
     }
   });
-  return await fs.unlink(`${args.outDir}/index.js`);
+  await fs.copy(app('index.html'), out('index.html'));
+  return await fs.remove(tmp());
 };
