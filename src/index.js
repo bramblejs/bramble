@@ -1,7 +1,7 @@
 const check = require('./check');
-const write = require('./write');
+const schema = require('./schema');
 
 module.exports = {
   check,
-  write
+  schema
 };
