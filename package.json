@@ -27,7 +27,7 @@
     "prepush": "npm run write && git commit -am 'Update bramble-lock.json.'",
     "test": "jest",
     "version": "npm run write",
-    "write": "node ./src/bind/index.js write && git add ."
+    "write": "node ./src/bin/index.js write && git add ."
   },
   "repository": {
     "type": "git",
