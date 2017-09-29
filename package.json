@@ -7,7 +7,9 @@
   "name": "bramblejs",
   "description": "Elegantly visualising bundle sizes over time.",
   "main": "src/index.js",
-  "files": ["src/"],
+  "files": [
+    "src/"
+  ],
   "bin": "src/bin",
   "dependencies": {
     "bytes": "^3.0.0",
@@ -22,7 +24,10 @@
     "source-trace": "^2.0.1"
   },
   "scripts": {
-    "test": "jest"
+    "prepush": "npm run write && git commit -am 'Update bramble-lock.json.'",
+    "test": "jest",
+    "version": "npm run write",
+    "write": "node ./src/bind/index.js write && git add ."
   },
   "repository": {
     "type": "git",
