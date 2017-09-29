@@ -19,6 +19,7 @@ module.exports = async () => {
   const defaults = {
     limit: 0,
     mains: '.',
+    outDir: 'bramble',
     threshold: 0
   };
   return {
