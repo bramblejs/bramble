@@ -134,5 +134,5 @@ When updating the bramble file it does the following:
 1. Get the current version.
 2. Get all versions from NPM.
 3. Check if the current version has been published.
-  - If it has, use "unreleased" as the current version instead.
-  - Continue using the current version.
+  1. If it has, use "unreleased" as the current version instead.
+  2. Continue using the current version.
