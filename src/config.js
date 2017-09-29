@@ -18,7 +18,7 @@ function load(...args) {
 module.exports = async () => {
   const defaults = {
     limit: 0,
-    mains: (await getPackage()).main || 'src/**/*.js',
+    mains: '.',
     threshold: 0
   };
   return {
