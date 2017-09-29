@@ -1,11 +1,8 @@
 {
   "name": "bramblejs",
-  "version": "1.0.0",
   "description": "Elegantly visualising bundle sizes over time.",
   "main": "src/index.js",
-  "files": [
-    "src/"
-  ],
+  "files": ["src/"],
   "bin": "src/bin",
   "dependencies": {
     "bytes": "^3.0.0",

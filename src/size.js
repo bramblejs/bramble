@@ -10,8 +10,6 @@ module.exports = async mains => {
     mains = [mains];
   }
 
-  mains = ['./src/bin/default.js'];
-
   const uniqueFiles = mains
     .reduce((prev, curr) => {
       return prev.concat(sourceTrace(curr));
