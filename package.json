@@ -41,5 +41,6 @@
   "homepage": "https://github.com/bramblejs/bramble#readme",
   "bramble": {
     "threshold": "1MB"
-  }
+  },
+  "version": "0.0.0"
 }
