@@ -14,7 +14,7 @@ npm install bramble
 
 If you've ever wondered what your package's overall size looks like over time - or wanted to regression test based on thresholds or limits - Bramble will help you do just that.
 
-Bramble (via [source-trace](https://github.com/treshugart/source-trace)) can work on your raw source even if it's VanillaJS, Stage-0 TC29 features, JSON, Flow, or TypeScript, and it will follow all dependencies down the tree using Node's module resolution algorithm. It will ignore all dependencies such as `devDependencies` and `peerDependencies`, and will only include what's listed each module's `dependencies` across the entire dependency graph.
+Bramble (via [source-trace](https://github.com/treshugart/source-trace)) can work on your raw source even if it's VanillaJS, Stage-0 features, JSON, Flow, or TypeScript, and it will follow all dependencies down the tree using Node's module resolution algorithm. It will ignore all dependencies such as `devDependencies` and `peerDependencies`, and will only include what's listed each module's `dependencies` across the entire dependency graph.
 
 ### Differences to [size-limit](https://github.com/ai/size-limit)
 
