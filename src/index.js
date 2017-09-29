@@ -1,7 +1,7 @@
-const build = require('./build');
 const check = require('./check');
+const write = require('./write');
 
 module.exports = {
-  build,
-  check
+  check,
+  write
 };

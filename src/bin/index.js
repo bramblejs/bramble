@@ -7,18 +7,11 @@ const yargs = require('yargs');
 const { getPackage } = require('../pkg');
 
 const { argv } = yargs;
-const cmd = argv._.join(path.delimiter) || 'default';
+const cmd = argv._.join(path.delimiter) || 'check';
 
 (async () => {
-  const main = (await getPackage()).main;
-  const defaults = {
-    limit: 0,
-    mains: main || 'src/**/*.js',
-    threshold: 1024
-  };
-
   if (fs.existsSync(path.join(__dirname, `${cmd}.js`))) {
-    require(`./${cmd}`)({ ...defaults, ...argv });
+    await require(`./${cmd}`)(argv);
   } else {
     throw new Error(`Command not found: ${cmd}`);
   }
