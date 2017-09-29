@@ -57,12 +57,12 @@ To set up a `prepush` hook, you can use something like [Husky](https://github.co
 ```json
 {
   "scripts": {
-    "prepush": "bramble write && git add . && git commit -am 'Update bramble-lock.json.'"
+    "prepush": "bramble write && git add . && git commit --ignore-errors -am 'Update bramble-lock.json.'"
   }
 }
 ```
 
-This is much like the `version` hook except that you must commit the resulting change otherwise it will only be staged and you'd have to manually do this.
+This is much like the `version` hook except that you must commit the resulting change otherwise it will only be staged and you'd have to manually do this. We also have to `--ignore-errors` errors here because `git commit` will exit with a non-zero status if there is nothing to commit.
 
 #### What about on pre-commit?
 
