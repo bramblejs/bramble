@@ -78,6 +78,8 @@ You could run this on `precommit` (via Husky, like `prepush`) in the same way th
 
 Since this is just before committing, the `git add .` bit will ensure the files are added to the commit.
 
+*Something else to note here is that Bramble requires a network connection to get information from NPM. If you use it on precommit, and you're working offline, then your commits will fail.*
+
 ### Netlify
 
 This means that you can analyse bundles over time as part of PRs and releases.
