@@ -3,3 +3,5 @@ npm-debug.log*
 
 app/bundle.js
 bramble/
+
+bramble/**

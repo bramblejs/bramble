@@ -1,12 +1,15 @@
-require('chart.js/dist/Chart.bundle.min.js');
+require("chart.js/dist/Chart.bundle.min.js");
 
-const pjson = require('../package.json');
-const mockData = require('../bramble-lock.json');
+const pjson = require("../package.json");
+const mockData = require("../bramble-lock.json");
 
-const ctx = $('#lineChart');
+const ctx = $("#lineChart");
 const data = Object.values(mockData).map(a => a.size);
 const maxData = Math.max(...data);
-const labels = Object.keys(mockData);
+const labelsArr = Object.keys(mockData);
+const labels = labelsArr.includes("unreleased")
+  ? [...labelsArr.filter(item => item !== "unreleased"), "unreleased"]
+  : labelsArr;
 const threshold = labels.map(a => pjson.bramble.threshold);
 const sub = (a1, a2) => a1.map((e, i) => e - a2[i]);
 const difference = sub(data, threshold);
@@ -29,48 +32,48 @@ splitData();
 const pointColor = () => {
   difference.forEach(val => {
     val >= 0
-      ? pointBackgroundColors.push('#f58368')
-      : pointBackgroundColors.push('#90cd8a');
+      ? pointBackgroundColors.push("#f58368")
+      : pointBackgroundColors.push("#90cd8a");
   });
 };
 pointColor();
 const lineChart = new Chart(ctx, {
-  type: 'line',
+  type: "line",
   data: {
     labels: labels,
     datasets: [
       {
-        backgroundColor: 'transparent',
-        borderColor: '#3e95cd',
+        backgroundColor: "transparent",
+        borderColor: "#3e95cd",
         data: data,
         fill: false,
-        label: 'Current Bundle Size',
+        label: "Current Bundle Size",
         pointBackgroundColor: pointBackgroundColors
       },
       {
-        backgroundColor: 'rgba(255,0,0,0.3)',
+        backgroundColor: "rgba(255,0,0,0.3)",
         data: upperT,
         fill: 3,
-        label: 'Upper Bundle Values'
+        label: "Upper Bundle Values"
       },
       {
-        backgroundColor: 'rgba(0,255,0,0.3)',
+        backgroundColor: "rgba(0,255,0,0.3)",
         data: lowerT,
         fill: 3,
-        label: 'Lower Bundle Values'
+        label: "Lower Bundle Values"
       },
       {
-        backgroundColor: 'transparent',
-        borderColor: '#8e5ea2',
+        backgroundColor: "transparent",
+        borderColor: "#8e5ea2",
         data: threshold,
         fill: false,
-        label: 'Threshold'
+        label: "Threshold"
       },
       {
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         data: difference,
         fill: false,
-        label: 'Difference',
+        label: "Difference",
         pointBackgroundColor: pointBackgroundColors,
         pointBorderColor: pointBackgroundColors,
         showLine: false
@@ -79,10 +82,10 @@ const lineChart = new Chart(ctx, {
   },
   options: {
     hover: {
-      mode: 'label'
+      mode: "label"
     },
     legend: {
-      position: 'top'
+      position: "top"
     },
     responsive: true,
     maintainAspectRatio: true,
@@ -92,7 +95,7 @@ const lineChart = new Chart(ctx, {
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Build Version'
+            labelString: "Build Version"
           }
         }
       ],
@@ -101,7 +104,7 @@ const lineChart = new Chart(ctx, {
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Bundle Size (Byte)'
+            labelString: "Bundle Size (Byte)"
           },
           ticks: {
             beginAtZero: false,
@@ -114,10 +117,10 @@ const lineChart = new Chart(ctx, {
     },
     title: {
       display: true,
-      text: 'Build Version vs Bundle Size'
+      text: "Build Version vs Bundle Size"
     },
     tooltips: {
-      mode: 'label',
+      mode: "label",
       intersect: true
     }
   }
